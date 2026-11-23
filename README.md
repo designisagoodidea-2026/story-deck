@@ -29,22 +29,52 @@ A deck pins the engine's major version (`ENGINE = 2`). A newer minor version arr
 - The voice teleprompter uses the dictation capability of the claude.ai Artifact runtime, so it listens only in a deck published as a claude.ai Artifact and opened in Chrome. Everywhere else the notes screen works the same, without voice tracking.
 - Reveal.js, GSAP and Google Fonts load from public CDNs at view time.
 
-## Install
+## Getting started
 
-As a Claude Code plugin (adds the `story-deck` skill, which runs the steps below for you):
+There are three ways in. With either of the first two, Claude does the setup and building for you; you never need to fork this repo. Fork it only if you want to change the engine and keep your changes, or send a pull request.
+
+### 1. In the Claude desktop app
+
+story-deck isn't in the plugin directory, so searching for it there finds other tools. Add this repo as a marketplace instead:
+
+1. Open **Settings → Plugins**.
+2. Click **Add** (top right) and choose to add a marketplace. Enter `designisagoodidea-2026/story-deck`.
+3. Install **story-deck** from the list that appears.
+4. Close Settings, start a new session on **This computer**, and ask for a story deck (see "Your first deck" below).
+
+### 2. In Claude Code in a terminal
+
+Start `claude`, then run:
 
 ```
 /plugin marketplace add designisagoodidea-2026/story-deck
 /plugin install story-deck@story-deck
 ```
 
-Or clone it:
+Claude Code fetches the plugin from GitHub. Then ask for a story deck.
+
+### 3. By hand
+
+Clone it, then start and build a deck yourself:
 
 ```bash
 cd "$HOME" && git clone https://github.com/designisagoodidea-2026/story-deck.git && cd story-deck/harness && npm ci
 ```
 
-## Quick start
+`npm ci` is only needed for the screenshot checks and PDF export. Continue with "Quick start" below.
+
+## Your first deck
+
+The source material is your story. Claude turns it into slides, speaker notes and a structure you can change.
+
+- **Tell it the story.** Talk it through or type it: the situation, what you set out to achieve, what you did, and what changed. Say who the audience is and the one or two things you want them to leave with.
+- **Or point it at what you have.** An existing case-study deck, a PDF, a doc or notes. Ask Claude to adapt it, for example: "Use story-deck to turn my case study at `~/Documents/case-study.pdf` into a story deck for a design leadership audience."
+- **Iterate out loud.** Say what to change: an order, a headline, a slide that's too busy, notes that don't sound like you. Expect many rounds; the decks this came from took about thirty.
+- **Rehearse.** Open the built deck twice, press `p` in one window for the notes screen, and present. To have the teleprompter follow your voice, ask Claude to publish the deck as a claude.ai Artifact and open it in Chrome. In a local HTML file the notes screen works, without voice tracking.
+
+Claude won't invent facts, figures or quotes for you. When something is missing, it asks.
+
+## Quick start (by hand)
 
 ```bash
 cd "$HOME/story-deck" && python3 -I -B new.py ../my-deck --company "Example Co" --name "Sam Rivera" --title "Head of Design"

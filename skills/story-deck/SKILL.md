@@ -18,7 +18,7 @@ Three layers. Decide which one a request touches before editing anything:
 
 ## 1. Start a deck
 
-Ask for what you can't infer: the audience (company, person, title), what each story should answer, and the one or two things they want the audience to leave with. Don't invent facts, figures or quotes; ask.
+The source material is the person's story. If they point at something they already have (a case-study deck, PDF, doc or notes), read it first and propose the cases, slides and notes from it. Otherwise ask them to tell the story: the situation, what they set out to achieve, what they did, what changed. Ask for what you can't infer: the audience (company, person, title), what each story should answer, and the one or two things they want the audience to leave with. Don't invent facts, figures or quotes; ask.
 
 ```bash
 cd "<KIT>" && python3 -I -B new.py "<deck folder>" --company "<Company>" --name "<First Last>" --title "<Title>"
