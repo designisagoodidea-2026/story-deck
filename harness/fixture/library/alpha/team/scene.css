@@ -1,0 +1,3 @@
+section[data-build="alpha/team"] .viz { display: flex; flex-direction: column; gap: 16px; }
+section[data-build="alpha/team"] .viz svg { height: auto; flex: none; }
+section[data-build="alpha/team"] .queue { font-size: 26px; font-weight: 600; color: var(--case-ink); margin: 0; }

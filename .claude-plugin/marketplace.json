@@ -1,0 +1,13 @@
+{
+  "name": "story-deck",
+  "owner": { "name": "Jason Armstrong" },
+  "metadata": { "description": "The story deck kit as a Claude Code plugin." },
+  "plugins": [
+    {
+      "name": "story-deck",
+      "source": "./",
+      "description": "Build illustrated, animated case-study presentations with a presenter screen and a voice-following teleprompter.",
+      "version": "2.3.0"
+    }
+  ]
+}

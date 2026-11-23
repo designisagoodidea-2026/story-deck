@@ -1,0 +1,10 @@
+{
+  "name": "story-deck",
+  "version": "2.3.0",
+  "description": "Build illustrated, animated case-study presentations as one HTML page, with a presenter screen and a teleprompter that follows your voice. Engine versioned apart from content; screenshot-tested builds.",
+  "author": { "name": "Jason Armstrong" },
+  "homepage": "https://github.com/designisagoodidea-2026/story-deck",
+  "repository": "https://github.com/designisagoodidea-2026/story-deck",
+  "license": "MIT",
+  "keywords": ["presentation", "slides", "teleprompter", "reveal.js", "case study"]
+}

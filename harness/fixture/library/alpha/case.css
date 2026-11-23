@@ -1,0 +1,3 @@
+:root { --c-alpha: #2F6FDE; --c-alpha-ink: #1F4FA8; }
+section[data-case="alpha"] { --case: var(--c-alpha); --case-ink: var(--c-alpha-ink); }
+.h-alpha { font-weight: 600; letter-spacing: -0.02em; color: var(--c-alpha-ink); }

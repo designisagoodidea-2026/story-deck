@@ -1,0 +1,7 @@
+{
+  "name": "story-deck-harness",
+  "private": true,
+  "description": "Screenshot harness for story decks: every scene and key press, compared with stored references.",
+  "scripts": { "test": "playwright test" },
+  "devDependencies": { "@playwright/test": "1.64.1" }
+}

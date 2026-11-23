@@ -1,0 +1,6 @@
+__pycache__/
+art/src/
+harness/node_modules/
+harness/test-results/
+harness/playwright-report/
+harness/.out/

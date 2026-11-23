@@ -1,0 +1,3 @@
+:root { --c-beta: #2E9E6B; --c-beta-ink: #1D7350; }
+section[data-case="beta"] { --case: var(--c-beta); --case-ink: var(--c-beta-ink); }
+.h-beta { font-weight: 600; letter-spacing: -0.02em; color: var(--c-beta-ink); }

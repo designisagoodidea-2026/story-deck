@@ -1,0 +1,3 @@
+section[data-build="opening/hello"] .hello { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gut); }
+section[data-build="opening/hello"] .hello li { display: flex; align-items: center; gap: 16px; font-size: 22px; }
+section[data-build="opening/hello"] .hello img { width: 72px; height: 72px; }

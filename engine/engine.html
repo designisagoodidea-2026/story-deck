@@ -1,0 +1,885 @@
+<meta charset="utf-8">
+<meta name="generator" content="story-deck /*VERSION*/">
+<title>/*TITLE*/</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Bebas+Neue&family=Anton&family=Figtree:wght@800&family=Nunito:wght@800&display=swap">
+<style>/*REVEAL_CSS*/</style>
+<style>
+/* One look: an illustrated cast over Category standard type, with Wayfinding's line-and-stops progress.
+   Everything sits on a 12-column grid with a 24px gutter.
+   Company colors are hints: fills, bars, rings and rules on that case's slides only; text stays in ink. */
+:root {
+  --audience: /*AUDIENCE_COLOR*/;
+  --gut: 24px;
+  --live: #B1060F; /* the presenter's listening dot and offline status */
+}
+:root {
+  --paper: #F3F4F7; --panel: #FFFFFF; --ink: #232836; --muted: #5A6172; --hair: #D5D9E1; --line: #3A4052;
+  --accent: #D9563F; --accent-ink: #B8432F;
+  --display: "Geist", system-ui, sans-serif; --body: "Geist", system-ui, sans-serif; --mono: "Geist Mono", ui-monospace, monospace;
+  --claim-size: 96px; --claim-weight: 500; --claim-track: -0.04em;
+  --r: 16px; --sw: 1.5; --gridtint: rgb(217 86 63 / 5%);
+  --lift: 0 1px 2px rgb(20 24 40 / 6%), 0 12px 30px -18px rgb(20 24 40 / 25%);
+}
+section { --case: var(--accent); --case-ink: var(--accent-ink); }
+
+html, body { height: 100%; }
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-variant-numeric: tabular-nums; }
+::selection { background: var(--ink); color: var(--paper); }
+.reveal-viewport { background: var(--paper); }
+.reveal { font-family: var(--body); color: var(--ink); font-size: 26px; }
+.reveal .slides { text-align: left; }
+.reveal .slides section { padding: 0; height: 100%; box-sizing: border-box; }
+.reveal .progress { color: var(--ink); height: 2px; }
+.reveal .controls { color: var(--ink); }
+
+/* The scene is a 12-column grid: the claim spans 12, the drawing field and footer span 12. */
+.scene { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); grid-template-rows: auto 1fr auto; row-gap: 28px; height: 100%; box-sizing: border-box; padding: 40px 48px 0; }
+.reveal h2.claim { grid-column: 1 / -1; font-family: var(--display); font-weight: var(--claim-weight); font-size: var(--claim-size); line-height: 0.98; letter-spacing: var(--claim-track); margin: 0; text-wrap: pretty; color: var(--ink); text-transform: none; }
+.reveal h2.claim em { font-style: normal; color: var(--case-ink); }
+.reveal h2.claim > div { padding-bottom: 0.16em; margin-bottom: -0.16em; }
+.viz { grid-column: 1 / -1; position: relative; min-height: 0; }
+/* Optional caption under the claim (deck.py CAPTIONS = True); today scenes say so above it */
+.scene.has-cap { grid-template-rows: auto auto 1fr auto; row-gap: 22px; }
+.cap { grid-column: 1 / span 10; margin: -6px 0 0; font-size: 23px; line-height: 1.4; color: var(--muted); max-width: 64ch; text-wrap: pretty; }
+.cap .tt { display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; color: var(--case-ink); margin-bottom: 4px; }
+/* Case context: where, when, team, role, then the problem; an eyebrow names the case above the claim */
+.reveal section[data-build="context"] h2.claim { font-size: calc(var(--claim-size) * .8); }
+section[data-build="context"] .cap.org { color: var(--case-ink); font-weight: 600; font-size: 22px; letter-spacing: .01em; }
+section[data-build="context"] .scene.has-cap { grid-template-rows: auto auto auto 1fr auto; }
+.ctx { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 3fr); gap: 40px; align-items: start; margin-top: 18px; }
+.ctx .vign { margin: 0; border-radius: var(--r); }
+.ctx .facts { display: flex; flex-direction: column; gap: 30px; }
+.ctx .frow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gut); border-top: 4px solid var(--case); padding-top: 16px; }
+.ctx .k { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--case-ink); }
+.ctx .fc p { margin: 8px 0 0; font-size: 25px; line-height: 1.3; letter-spacing: -0.01em; }
+.ctx .prob { background: var(--panel); border-radius: var(--r); padding: 22px 28px 26px; box-shadow: var(--lift); }
+.ctx .prob p { margin: 6px 0 0; font-family: var(--display); font-weight: 500; font-size: 36px; line-height: 1.2; letter-spacing: -0.02em; }
+.eyebrow { grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; margin-bottom: -6px; }
+.eyebrow .cn { font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-right: 16px; border-right: 1px solid var(--hair); }
+.eyebrow .mk img { height: 44px; max-width: 110px; display: block; object-fit: contain; }
+.eyebrow .on { font-family: var(--display); font-size: 30px; font-weight: 600; letter-spacing: -0.015em; color: var(--case-ink); }
+/* Tags on case cards (CASE_TEXT tags in deck.py), and a contact line on the thank-you */
+.case-card .tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.case-card .tags i { font-style: normal; font-size: 11px; font-weight: 600; letter-spacing: 0; color: var(--ink); background: color-mix(in srgb, var(--k) 12%, var(--panel)); border-radius: 999px; padding: 3px 7px; white-space: nowrap; }
+.contact { margin: 26px 0 0; font-size: 18px; color: var(--muted); }
+.contact b { color: var(--ink); font-weight: 600; }
+.viz svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.foot { grid-column: 1 / -1; }
+/* G shows the column grid */
+.show-grid .viz { background-image: linear-gradient(to right, var(--gridtint) 0 calc(100% - var(--gut)), transparent calc(100% - var(--gut))); background-size: calc((100% + var(--gut)) / 12) 100%; }
+.show-grid .viz { --gridtint: rgb(229 9 20 / 9%); }
+
+/* Footer: case, guide question, progress, sheet number, on the same 12 columns */
+.foot { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: center; font-size: 11px; color: var(--muted); }
+.foot > * { display: flex; align-items: center; gap: 8px; padding: 11px 0; min-width: 0; }
+.foot .who { display: none; }
+.foot .cl { grid-column: span 3; font-weight: 600; color: var(--ink); }
+.foot .q { grid-column: span 6; color: var(--ink); }
+.foot .q::before { content: var(--q-label, "Answers"); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); flex: none; }
+.foot .q.now::before { content: var(--q-now, "Probe"); color: var(--case-ink); }
+.foot .q:empty::before { content: none; }
+.trail { grid-column: span 2; gap: 5px; }
+.trail i { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--muted); box-sizing: border-box; }
+.trail i.on { background: var(--case); border-color: var(--case); }
+.trail i.done { background: var(--muted); border-color: var(--muted); }
+.sheet { grid-column: span 1; justify-content: flex-end; font-size: 10.5px; color: var(--ink); white-space: nowrap; }
+
+/* SVG marks take the look's tokens */
+.lbl { font-family: var(--body); fill: var(--ink); font-size: 17px; }
+.lbl.sm { font-size: 12px; fill: var(--muted); }
+.lbl.mono { font-size: 10px; letter-spacing: .1em; fill: var(--muted); text-transform: uppercase; }
+.lbl.big { font-family: var(--display); font-weight: 600; font-size: 46px; letter-spacing: -0.03em; }
+.lbl.hd { font-family: var(--display); font-weight: 600; font-size: 28px; letter-spacing: -0.015em; }
+.lbl.acc { fill: var(--case-ink); }
+.lbl.h3 { font-family: var(--display); font-weight: 600; font-size: 23px; letter-spacing: -0.01em; }
+.lbl.md { font-size: 16px; fill: var(--muted); }
+.lbl.md.big2 { font-size: 20px; }
+.lbl.h3s { font-family: var(--display); font-weight: 600; font-size: 19px; }
+.sheet-hd { fill: #E6F4EA; }
+.sheet-ln { stroke: #1E8E3E; stroke-opacity: .45; }
+.pill.on { fill: #DDF1E7; } .pill.risk { fill: #FDE8C9; } .pill.off { fill: #E7E9EE; }
+.lbl.pill-t { fill: var(--ink); font-size: 11.5px; }
+.flow4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gut); align-content: start; }
+.flow4 .col { gap: 12px; }
+.flow4 .chip { font-size: 16px; }
+.then-line { margin: 0 0 18px; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.mini { fill: var(--panel); stroke: var(--hair); stroke-width: 1; }
+.mini-bar.pre, .mini-hot.pre { fill: #F2A193; }
+.mini-bar.post { fill: #3A3F4B; }
+.mini-cell { fill: var(--hair); }
+.mini-screen { fill: #2E333D; }
+.lbl.inv { fill: var(--paper); }
+.ln { stroke: var(--hair); stroke-width: var(--sw); fill: none; }
+.ln.ink { stroke: var(--line); }
+.ln.acc { stroke: var(--case); }
+.ln.dash { stroke-dasharray: 5 6; }
+.box { fill: var(--panel); stroke: var(--line); stroke-width: var(--sw); }
+.box.soft { stroke: var(--hair); }
+.box.acc { fill: color-mix(in srgb, var(--case) 12%, var(--panel)); stroke: var(--case); }
+.box.solid { fill: var(--case); stroke: var(--case); }
+.box.ghost { fill: none; stroke: var(--muted); stroke-dasharray: 6 6; }
+.dot { fill: var(--muted); }
+.dot.acc { fill: var(--case); }
+.dot.ink { fill: var(--ink); }
+.cyc .lbl.tick { fill: var(--muted); transition: fill .4s; }
+.cyc .lbl.tick.on { fill: var(--case-ink); }
+.cyc .lbl.muted { fill: var(--muted); }
+.bar { fill: var(--hair); }
+.bar.acc { fill: var(--case); }
+.ring-bg { fill: color-mix(in srgb, var(--case) 9%, var(--panel)); }
+.ring { fill: none; stroke: color-mix(in srgb, var(--case) 45%, transparent); stroke-width: 1.25; }
+
+/* HTML pieces: equal splits of the 12 columns */
+.chip { font-size: 15px; line-height: 1.32; padding: 9px 12px; border-radius: var(--r); background: var(--panel); border: 1px solid var(--hair); color: var(--ink); }
+.chip.person::before, .chip.agent::before { display: block; font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 3px; }
+.chip.person { border-color: var(--line); }
+.chip.person::before { content: "A person"; color: var(--muted); }
+.chip.agent { border-color: var(--case); background: color-mix(in srgb, var(--case) 9%, var(--panel)); }
+.chip.agent::before { content: "An agent"; color: var(--case-ink); }
+.cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gut); align-content: start; }
+.col { border-top: 3px solid var(--case); background: var(--panel); border-radius: var(--r); padding: 18px 22px 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.col .k { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--case-ink); }
+.col p { margin: 0; font-size: 18px; line-height: 1.4; }
+.col p.m { color: var(--muted); }
+section[data-build="closing"] .col { padding: 24px 26px 28px; gap: 14px; }
+section[data-build="closing"] .col p { font-size: 28px; line-height: 1.34; letter-spacing: -0.01em; }
+.strip { margin: 22px 0 0; font-size: 16px; color: var(--muted); border-top: 1px solid var(--hair); padding-top: 14px; }
+.strip b { color: var(--ink); font-weight: 600; }
+section[data-build="closing"] .strip { font-size: 22px; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gut); align-content: start; }
+.tile { background: var(--panel); border: 1px solid var(--hair); border-radius: var(--r); padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.tile .name { font-family: var(--display); font-size: 34px; font-weight: 600; letter-spacing: -0.02em; }
+.parts .tile p { font-size: 17px; color: var(--ink); }
+/* Prototypes, practice drawings, month plans, tiles and cards: shared pieces (kept in this order; later blocks override them) */
+.protos { transition: grid-template-columns .6s cubic-bezier(.2,.7,.2,1); }
+.protos .tile { transition: opacity .4s, filter .4s; }
+.protos.focusing .tile:not(.on) { opacity: .38; filter: saturate(.15); }
+.protos .demo { aspect-ratio: 400 / 240; border-radius: 10px; background: color-mix(in srgb, var(--accent) 6%, var(--paper)); overflow: hidden; margin-bottom: 6px; }
+.demo svg, .nv svg { width: 100%; height: 100%; display: block; }
+.demo text, .nv text { font-family: var(--body); font-size: 11px; fill: var(--ink); }
+.demo text.m, .nv text.m { font-size: 9.5px; fill: var(--muted); }
+.demo text.b, .nv text.b { font-weight: 600; }
+.demo text.w, .nv text.w { fill: #FFFFFF; }
+.demo .a, .nv .a { transform-box: fill-box; transform-origin: 50% 50%; }
+.protos .demo .a { animation-play-state: paused !important; }
+.protos .tile.on .demo .a { animation-play-state: running !important; }
+.nv { aspect-ratio: 400 / 220; margin: -4px -6px 4px; }
+.nv .a { animation-play-state: paused !important; }
+.reveal section.present .nv .a { animation-play-state: running !important; }
+@keyframes wave { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+.months .col { position: relative; }
+.months .col p { font-size: 17px; }
+.months .outcome { margin-top: auto !important; padding-top: 12px; border-top: 1px solid var(--hair); color: var(--ink); }
+.months .outcome b { display: block; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--case-ink); margin-bottom: 4px; font-weight: 600; }
+.months .next { position: absolute; right: -22px; top: 50%; transform: translate(50%, -50%) rotate(90deg); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.tile p { margin: 0; font-size: 14px; line-height: 1.45; color: var(--muted); }
+.tile .tag { font-size: 10px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gut); align-content: start; }
+.card { background: var(--panel); border: 1px solid var(--hair); border-radius: var(--r); padding: 14px 16px; font-size: 15px; line-height: 1.35; min-width: 0; }
+.card .who { display: block; font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.card.agent { border-color: var(--case); background: color-mix(in srgb, var(--case) 9%, var(--panel)); }
+.card.agent .who { color: var(--case-ink); }
+/* Thank you: the four stories again, small, with their vignettes still moving */
+.recap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gut); }
+.rc { --case: var(--k); background: var(--panel); border-radius: var(--r); box-shadow: var(--lift); overflow: hidden; padding: 0 20px 22px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.rc .mk { height: 30px; display: flex; align-items: center; margin-top: 4px; }
+.rc .mk img { max-height: 30px; max-width: 150px; display: block; }
+.rc .nm { font-family: var(--display); font-weight: 500; font-size: 22px; line-height: 1.2; letter-spacing: -0.015em; }
+.for { display: flex; align-items: center; gap: 14px; margin-top: 40px; font-size: 15px; color: var(--muted); }
+.for svg { height: 26px; width: auto; display: block; }
+.for .z { fill: var(--audience); }
+/* Case map */
+.cases { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gut); align-content: start; }
+.case-card { --case: var(--k); min-height: 330px; box-sizing: border-box; text-align: left; font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--hair); border-top: 6px solid var(--k); border-radius: var(--r); padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; min-width: 0; transition: transform .3s cubic-bezier(.2,.7,.2,1), border-color .2s; }
+.case-card:hover { transform: translateY(-4px); border-color: var(--k); }
+.case-card:focus-visible { outline: 3px solid var(--k); outline-offset: 3px; }
+.case-card .n { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.case-card .org { font-size: 38px; line-height: 1; }
+.case-card .nm { font-family: var(--display); font-weight: 500; font-size: 28px; line-height: 1.12; letter-spacing: -0.02em; }
+.case-card .cq { font-size: 12px; line-height: 1.4; color: var(--muted); }
+.case-card.done { background: color-mix(in srgb, var(--panel) 55%, transparent); box-shadow: none; }
+.case-card.done .vign { filter: saturate(.18); opacity: .7; }
+.case-card.done .vign .a, .case-card.done .vign .flow { animation-duration: 10s !important; }
+.case-card.done .nm, .case-card.done .org { color: #8F95A2 !important; }
+.case-card.done .cq, .case-card.done .n { color: #A6ABB5; }
+.case-card.done .n::after { content: " · told"; }
+.case-card.next { box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--k) 70%, transparent); transform: translateY(-6px); border-color: var(--k); }
+.case-card.next .n::after { content: " · next"; color: var(--ink); }
+/* With tags, four cards across: shorter vignettes and smaller names so the map clears the footer */
+.cases.tagged .vign { aspect-ratio: 400 / 150; }
+.cases.tagged .case-card { min-height: 0; }
+.cases.tagged .case-card .org { font-size: 30px; }
+.cases.tagged .case-card .nm { font-size: 23px; }
+.also { margin-top: 24px; display: flex; gap: 10px; align-items: center; font-size: 13px; color: var(--muted); }
+.also button { font: 500 14px var(--body); color: var(--ink); background: none; border: 1px solid var(--hair); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.also button:hover, .also button:focus-visible { border-color: var(--ink); outline: none; }
+/* Then and today */
+.steps { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+.steps span { font-size: 11px; color: var(--muted); border: 1px solid var(--hair); border-radius: 999px; padding: 4px 12px; }
+.steps span.on { color: var(--ink); border-color: var(--case); background: color-mix(in srgb, var(--case) 12%, transparent); font-weight: 600; }
+.tn { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gut); align-items: start; }
+.side { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.side .k { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-bottom: 6px; border-bottom: 1px solid var(--hair); }
+.side.today .k { color: var(--case-ink); border-color: var(--case); }
+.side.then .chip { color: var(--muted); background: transparent; border-style: dashed; }
+/* Cards lift off the ground; the case color rides their top edge */
+.col, .tile, .card, .case-card { border: 0; box-shadow: var(--lift); }
+.col { border-top: 0; box-shadow: inset 0 4px 0 var(--case), var(--lift); }
+.case-card { border-top: 0; overflow: hidden; padding-top: 0; }
+/* Case vignettes: illustrated pieces moving gently inside their own frame; nothing travels past the edge */
+.vign { margin: 0 -20px 8px; aspect-ratio: 400 / 210; background: color-mix(in srgb, var(--k) 8%, var(--panel)); overflow: hidden; }
+.vign svg { width: 100%; height: 100%; display: block; }
+.vign .a { transform-box: fill-box; transform-origin: 50% 100%; animation-play-state: paused; }
+.vign .c { transform-origin: 50% 50%; }
+.reveal section.present .vign .a, .reveal section.present .vign .flow { animation-play-state: running; }
+.vign .flow { stroke: var(--flow, var(--ink)); stroke-opacity: .5; stroke-width: 2; stroke-dasharray: 4 7; stroke-linecap: round; animation: flow 1.4s linear infinite paused; }
+.vign .puff { fill: #E9E3DE; }
+.bob { animation: bob 3.2s ease-in-out infinite; }
+.float { animation: bob 4s ease-in-out infinite; --amp: -6px; }
+.breathe { animation: bob 3.6s ease-in-out infinite; --amp: -2px; }
+.vign .wavehand { transform-origin: 79.8% 19.3%; animation: wavehand 1.4s ease-in-out infinite; }
+.puff { animation: puff 3.6s ease-out infinite; }
+.twinkle { animation: twinkle 2.2s ease-in-out infinite; }
+.sway { animation: sway 4.5s ease-in-out infinite; }
+.drift { animation: drift 14s ease-in-out infinite; }
+.vign .shimmer { fill: #FFFFFF; animation: twinkle 2.6s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(var(--amp, -3px)); } }
+@keyframes wavehand { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(12deg); } }
+@keyframes puff { 0% { transform: translateY(0) scale(.5); opacity: 0; } 20% { opacity: .9; } 100% { transform: translateY(-24px) scale(1.25); opacity: 0; } }
+@keyframes flow { to { stroke-dashoffset: -22; } }
+@keyframes twinkle { 0%, 100% { transform: scale(.72); opacity: .55; } 50% { transform: scale(1.06); opacity: 1; } }
+@keyframes sway { 0%, 100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
+@keyframes drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(40px); } }
+/* Reduced motion and print hold each vignette on its last frame (a vignette's base attributes are that frame) */
+@media (prefers-reduced-motion: reduce) { .vign .a, .vign .flow { animation: none !important; } .vign video { display: none; } }
+html.print-pdf .vign .a, html.print-pdf .vign .flow { animation: none !important; }
+html.print-pdf .vign video { display: none; }
+html.print-pdf .tools { display: none; }
+html.print-pdf .cameo { filter: none; } /* a drop shadow makes Chrome print the figure as a large bitmap */
+html.print-pdf .protos .demo .a { animation-delay: -8s !important; animation-play-state: paused !important; } /* print each prototype demo frozen at 80% of its 10s loop, where every demo shows one finished view */
+.vign .movie { position: relative; width: 100%; height: 100%; }
+.vign .movie > img, .vign .movie > video, .vign .movie > svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; } /* the whole movie, whatever the frame's shape; the bands take the movie's own background (below) */
+.vign .movie > video, .vign .movie > img { -webkit-mask-image: linear-gradient(90deg, transparent, #000 4.5%, #000 95.5%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4.5%, #000 95.5%, transparent); } /* soft side edges: no seam where the movie meets its bands */
+.chip.agent::before { content: "An agent"; padding-left: 28px; background: var(--art-agent) left center / 22px no-repeat; height: 22px; line-height: 22px; display: block; }
+.card.agent .who { padding-left: 28px; background: var(--art-agent) left center / 22px no-repeat; line-height: 22px; }
+/* Chapter transitions (deck.py CHAPTERS = True): the outgoing case's logo wipes out, the next one's wipes in */
+#chap { position: fixed; inset: 0; pointer-events: none; z-index: 40; display: none; }
+#chap img { position: absolute; left: 50%; top: 50%; height: 12vh; width: auto; max-width: 40vw; object-fit: contain; opacity: 0; }
+/* Illustration: a cameo beside each close */
+/* The section is its own stacking context, so the box carries the paper itself and the white video ground multiplies into it */
+.cameo-vid { position: absolute; right: -40px; bottom: 0; width: 380px; height: 560px; pointer-events: none; background: var(--paper); isolation: isolate; }
+.cameo-vid video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 50%; mix-blend-mode: multiply; }
+.cameo-vid video:not(.v-enter) { opacity: 0; }
+/* video does not print: the PDF gets the still cameo instead */
+.cameo.print-only { display: none; }
+html.print-pdf .cameo.print-only { display: block; }
+html.print-pdf .cameo-vid { display: none; }
+.cameo { scale: -1 1; display: block; position: absolute; right: 0; bottom: 0; height: 540px; width: auto; filter: drop-shadow(0 10px 16px rgb(20 24 40 / 12%)); }
+section[data-build="closing"] .cols { margin-right: 360px; }
+/* Case and scene styles from the library and the deck */
+/*CASE_CSS*/
+/*SCENE_CSS*/
+/* The deck's own styles (deck.css): token overrides such as --claim-size, --q-label, --q-now */
+/*DECK_CSS*/
+
+/* Wayfinding progress: a thin line in the case color with one stop per slide of the case */
+.scene { padding: 52px 64px 18px; }
+.foot { position: relative; padding-top: 16px; }
+.foot::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; border-radius: 1px; background: color-mix(in srgb, var(--case) 70%, transparent); }
+section:not([data-case]) .foot::before { height: 1px; background: var(--hair); }
+.trail { position: absolute; left: 0; right: 0; top: -4px; padding: 0; justify-content: space-between; }
+.trail i { width: 10px; height: 10px; border: 2px solid var(--case); background: var(--paper); }
+.trail i.on { background: var(--ink); border-color: var(--ink); transform: scale(1.2); }
+.trail i.done { background: var(--case); border-color: var(--case); }
+.sheet::after { content: attr(data-t); }
+
+/* Presenter tools: first slide only, back when you go backward or hover the corner */
+.tools { position: fixed; z-index: 30; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(env(safe-area-inset-top, 0px) + 12px); display: flex; gap: 6px; transition: opacity .35s; }
+.tools.hide { opacity: 0; }
+.tools.hide:hover, .tools.hide:focus-within { opacity: 1; }
+.tools button, .tools select { font: 500 12px var(--body); color: var(--ink); background: var(--panel); border: 1px solid var(--hair); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+.tools button:hover, .tools button[aria-pressed="true"] { border-color: var(--ink); }
+.tools :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+#notes { position: fixed; z-index: 29; left: 0; right: 0; bottom: 0; max-height: 46vh; overflow: auto; background: var(--panel); color: var(--ink); border-top: 1px solid var(--hair); padding: 18px max(16px, env(safe-area-inset-right, 0px)) calc(18px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); box-shadow: 0 -12px 40px rgb(0 0 0 / 14%); font-family: var(--body); }
+#notes .inner { max-width: 72ch; margin: 0 auto; font-size: 16px; line-height: 1.6; }
+#notes .q { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 14px 0 4px; font-weight: 600; }
+#notes p { margin: 0 0 10px; }
+#notes .d { color: var(--muted); border-left: 3px solid var(--hair); padding-left: 12px; }
+#notes .k, #notes .step { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+#notes .head { font-size: 11px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+#toast { position: fixed; z-index: 40; left: 50%; bottom: 28px; transform: translateX(-50%); max-width: 640px; background: var(--ink); color: var(--paper); font: 14px/1.45 var(--body); padding: 12px 16px; border-radius: 10px; box-shadow: 0 12px 30px rgb(0 0 0 / 25%); }
+
+/* Notes screen: a second window of the same deck, on the other display */
+#presenter { display: none; }
+.role-notes .reveal, .role-notes .tools, .role-notes #notes { display: none !important; }
+.role-notes body { overflow: auto; }
+.role-notes #presenter { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: 48px; min-height: 100vh; box-sizing: border-box; padding: 36px 44px; background: var(--paper); color: var(--ink); font-family: var(--body); }
+#presenter .notes-col { font-size: 28px; line-height: 1.5; max-width: 66ch; }
+#presenter .notes-col p { margin: 0 0 18px; }
+#presenter .notes-col .q { font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 26px 0 8px; }
+#presenter .notes-col .d { color: #4A5163; border-left: 4px solid var(--accent); padding-left: 18px; font-size: 23px; }
+#presenter .notes-col .step { display: inline-block; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--paper); background: var(--ink); border-radius: 6px; padding: 5px 10px; margin-bottom: 18px; }
+#presenter .notes-col .k { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--hair); font-size: 16px; color: var(--muted); }
+#presenter .notes-col .k b { color: var(--ink); }
+#presenter .side-col { display: flex; flex-direction: column; gap: 22px; position: sticky; top: 36px; align-self: start; }
+#presenter .meta { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; color: var(--muted); }
+#presenter .timer { font-size: 44px; color: var(--ink); font-variant-numeric: tabular-nums; }
+#presenter .card-next { border: 1px solid var(--hair); border-radius: 10px; padding: 18px 20px; background: var(--panel); }
+#presenter .lab { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+#presenter .row-key { margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--hair); }
+#presenter .row-key[hidden] { display: none; }
+#presenter .key-next { font-size: 20px; line-height: 1.3; font-weight: 600; color: var(--ink); }
+#presenter .claim-next { font-size: 18px; line-height: 1.3; color: var(--ink); }
+#presenter .status { font-size: 14px; color: var(--muted); }
+/* Teleprompter: what's been said dims back, core ideas are bold ahead of you */
+#presenter .notes-col { padding-bottom: 80vh; }
+.role-notes, .role-notes body { overflow-anchor: none; } /* the prompter places the scroll; the browser shouldn't adjust it */
+#presenter .w { transition: color .12s ease; }
+#presenter .w.em { font-weight: 700; }
+#presenter .w.said, #presenter .notes-col .said-block { color: color-mix(in srgb, var(--ink) 32%, var(--paper)); }
+#presenter .notes-col .c { font-size: 19px; font-style: italic; color: var(--muted); }
+#presenter .mic { display: flex; align-items: center; gap: 10px; font: 600 15px var(--body); color: var(--ink); background: var(--panel); border: 1px solid var(--hair); border-radius: 10px; padding: 12px 14px; cursor: pointer; text-align: left; }
+#presenter .mic:hover, #presenter .mic:focus-visible { border-color: var(--ink); outline: none; }
+#presenter .mic .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--hair); flex: none; }
+#presenter .mic[data-state="listening"] .dot { background: var(--live); }
+#presenter .mic[hidden] { display: none; }
+#presenter .mic-note { font-size: 13px; color: var(--muted); margin-top: -12px; }
+#presenter .mic-note:empty { display: none; }
+#presenter .learn { font: 13px var(--body); color: var(--muted); background: none; border: 0; padding: 0; text-align: left; cursor: pointer; text-decoration: underline; text-decoration-color: var(--hair); text-underline-offset: 3px; }
+#presenter .learn[hidden] { display: none; }
+#presenter .notes-col .fold { font-size: 20px; color: var(--muted); }
+#presenter .notes-col .fold-l { display: block; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+#presenter .status.off { color: var(--live); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="tools">
+  <button id="btn-cases" type="button" title="Case map (C)">Cases</button>
+  <button id="btn-notes" type="button" title="How to put notes on your other display (N)">Notes</button>
+  <button id="btn-role" type="button" title="Turn this window into the notes screen (P)">Use as notes</button>
+  <button id="btn-view" type="button" aria-pressed="false" title="Switch between paging and scrolling (S)">Scroll view</button>
+  <button id="btn-full" type="button" title="Full screen">Full screen</button>
+</div>
+<div id="notes" hidden><div class="inner"></div></div>
+<div id="toast" hidden></div>
+<div id="presenter"><div class="notes-col"></div><div class="side-col"><div class="meta"><span class="pos"></span><span class="timer">0:00</span></div><div class="card-next"><div class="row-key"><div class="lab">Next key</div><div class="key-next"></div></div><div class="lab">Next slide</div><div class="claim-next"></div></div><button type="button" class="mic" data-state="idle" hidden><span class="dot"></span><span class="mic-l">Start prompter (M)</span></button><div class="mic-note"></div><button type="button" class="learn"></button><div class="status off">Waiting for the deck window…</div></div></div>
+
+<div class="reveal"><div class="slides">
+/*SLIDES*/
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@6.0.1/dist/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/DrawSVGPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Flip.min.js"></script>
+<script>
+const NOTES = /*NOTES*/;
+const EMPH = /*EMPH*/;
+const DECK = /*DECK*/; // audience, cases, and each scene instance's code id, text and case (build.py)
+/*TELE*/
+const ART = /*ART*/;
+const VID = /*VID*/; // presenter cameo clips (enter, breathe, gesture) and vignette movies
+const SVGNS = "http://www.w3.org/2000/svg";
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (window.gsap) gsap.registerPlugin(SplitText, DrawSVGPlugin, Flip);
+document.documentElement.style.setProperty("--art-agent", `url("${ART.agent}")`);
+
+/* ---------- grid + drawing helpers: 12 columns of 103 units with 24-unit gutters across a 1500-unit field ---------- */
+const X = k => k * 127, W = n => n * 127 - 24;
+function svg(w, h) { const s = document.createElementNS(SVGNS, "svg"); s.setAttribute("viewBox", `0 0 ${w} ${h}`); s.setAttribute("preserveAspectRatio", "xMinYMid meet"); s.setAttribute("role", "img"); return s; }
+function el(parent, tag, attrs = {}, text) {
+  const n = document.createElementNS(SVGNS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (text !== undefined) n.textContent = text;
+  parent.appendChild(n); return n;
+}
+function label(p, x, y, t, cls = "lbl", anchor = "start") { return el(p, "text", { x, y, class: cls, "text-anchor": anchor }, t); }
+function lines(p, x, y, arr, cls, anchor = "start", lh = 22) { arr.forEach((t, i) => label(p, x, y + i * lh, t, cls, anchor)); }
+// Illustrated cast: full bodies for the intro and cameos, shoulders-up portraits in a ring everywhere else
+const FACES = Object.keys(ART).filter(k => /^face-\d+$/.test(k)).sort();
+const BODIES = Object.keys(ART).filter(k => k.startsWith("body-")).sort();
+const ROLE = { designer: 1, researcher: 2, engineer: 3, content: 7, pm: 11, director: 12, ops: 8 };
+let castI = 0;
+const UNIQ = Object.keys(ART).filter(k => /^face-u\d+$/.test(k)).sort();
+const uniq = n => UNIQ.length ? UNIQ[n % UNIQ.length].slice(5) : n;
+let clipN = 0;
+function person(p, x, y, cls = "acc", role, h = 58) {
+  const g = el(p, "g", { class: "who" });
+  const i = typeof role === "string" ? (ROLE[role] ?? 0) : typeof role === "number" ? role : castI++;
+  const r = Math.max(16, h * 0.34), cy = y + 14 - r, iw = r * 2.25, ih = iw * 1.047, id = "pc" + clipN++;
+  el(g, "circle", { cx: x, cy, r, class: "ring-bg" });
+  el(g, "circle", { cx: x, cy, r, class: "ring" });
+  const cp = el(g, "clipPath", { id });
+  el(cp, "circle", { cx: x, cy, r });
+  el(cp, "rect", { x: x - r * 0.64, y: cy - r * 1.7, width: r * 1.28, height: r * 1.3 }); // head room above the ring
+  const named = typeof role === "string" && ART["face-" + role], flip = !named && i % 2 === 1;
+  el(g, "image", { href: named || ART[FACES[i % FACES.length]], x: x - iw / 2, y: cy + r - ih, width: iw, height: ih, "clip-path": `url(#${id})`, ...(flip ? { transform: `translate(${2 * x} 0) scale(-1 1)` } : {}) });
+  return g;
+}
+function mini(p, x, y, w, h, k, i) {
+  const g = el(p, "g", { class: "tool" });
+  el(g, "rect", { x, y, width: w, height: h, rx: 3, class: "mini" });
+  el(g, "rect", { x, y, width: w, height: 5, rx: 2, class: "mini-bar " + k });
+  if (k === "pre") for (let c = 0; c < 4; c++) for (let r = 0; r < 2; r++) el(g, "rect", { x: x + 3 + c * (w - 6) / 4, y: y + 9 + r * 7, width: (w - 6) / 4 - 2, height: 5, class: (c + r * 2 + i) % 5 ? "mini-cell" : "mini-hot pre" });
+  if (k === "pro") { el(g, "rect", { x: x + 3, y: y + 8, width: w * 0.55, height: h - 11, rx: 1, class: "mini-screen" }); el(g, "rect", { x: x + w * 0.64, y: y + 10, width: w * 0.28, height: 3, class: "mini-cell" }); el(g, "rect", { x: x + w * 0.64, y: y + 16, width: w * 0.2 * (1 + (i % 2)) / 1.5, height: 3, class: "mini-cell" }); }
+  if (k === "post") [0.7, 0.45, 0.85].forEach((f, r) => el(g, "rect", { x: x + 3 + ((i + r) % 3) * 2, y: y + 9 + r * 5, width: (w - 10) * f, height: 3, class: r === 1 ? "mini-hot post" : "mini-cell" }));
+}
+// The audience's logo as an image, recolored (paths marked class="z" take the color)
+const audienceLogo = c => "data:image/svg+xml;charset=utf-8," + encodeURIComponent(DECK.audience.logo.replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" ').replace('class="z"', `fill="${c}"`));
+function node(p, x, y, w, h, title, sub, cls = "box") { const g = el(p, "g", { class: "node" }); el(g, "rect", { x, y, width: w, height: h, rx: 6, class: cls }); label(g, x + 18, y + (sub ? h / 2 - 4 : h / 2 + 6), title, "lbl"); if (sub) [].concat(sub).forEach((t, i) => label(g, x + 18, y + h / 2 + 20 + i * 20, t, "lbl sm")); return g; }
+// Google Sheets cue: a small green sheet with a white grid
+function sheetsIcon(p, x, y, s = 22) {
+  const g = el(p, "g", { class: "sheets-ic" }), w = s * 0.78;
+  el(g, "rect", { x, y, width: w, height: s, rx: 2.5, style: "fill:#1E8E3E" });
+  el(g, "rect", { x: x + w * 0.2, y: y + s * 0.42, width: w * 0.6, height: s * 0.4, style: "fill:#FFFFFF" });
+  el(g, "line", { x1: x + w * 0.2, y1: y + s * 0.62, x2: x + w * 0.8, y2: y + s * 0.62, style: "stroke:#1E8E3E;stroke-width:1.2" });
+  el(g, "line", { x1: x + w * 0.45, y1: y + s * 0.42, x2: x + w * 0.45, y2: y + s * 0.82, style: "stroke:#1E8E3E;stroke-width:1.2" });
+  return g;
+}
+function chevron(p, xEnd, y) { el(p, "path", { d: `M${xEnd + 7} ${y - 7} L${xEnd + 15} ${y} L${xEnd + 7} ${y + 7}`, class: "ln ink draw", "stroke-width": 2 }); }
+const esc = t => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+/* ---------- scenes and cases register here; the engine calls them only through these ---------- */
+const SCENES = {}, VIGN = {};
+const Scene = { def(id, s) { SCENES[id] = s; } };
+const Case = { def(key, c) { VIGN[key] = c.vignette; Object.assign(VIGN, c.variants || {}); } }; // variants: extra vignettes, keyed "<case>-<name>"
+for (const k in DECK.scenes) DECK.scenes[k].audience = DECK.audience;
+const sceneData = sec => (sec && DECK.scenes[sec.dataset.scene]) || {};
+const sceneDef = sec => SCENES[sceneData(sec).code] || {};
+
+/* Case vignettes, drawn in a 400 x 210 frame. Every motion stays at least a few units inside the frame. */
+const im = (k, x, y, w, h, cls = "", d = 0) => `<image href="${ART[k]}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="xMidYMax meet" class="a ${cls}" style="animation-delay:${d}s"/>`;
+// The pieces stay put; small parts of each move on prime-length cycles so the loops never line up.
+let vn = 0;
+/* Keyframes generated per element (demos pivot each piece to its own place) */
+const KF = document.head.appendChild(document.createElement("style"));
+function kf(name, frames) { KF.textContent += `@keyframes ${name}{${frames.map(([p, c]) => `${p}%{${c}}`).join("")}}`; }
+const ringY = (cy, h) => cy - 14 + h * 0.34; // person() y that puts the ring centre at cy
+const ONCE = new Set(), once = (k, f) => { if (!ONCE.has(k)) { ONCE.add(k); f(); } }; // keyframes a vignette defines once, however often it's drawn
+
+/* ---------- shared slide components ---------- */
+// Case map: every case in the deck, the active one highlighted; optional 'Also' links to other scenes
+Scene.def('cases', {
+  build(v, sec, D) {
+    const a = +(sec.dataset.active || 0);
+    const tagged = DECK.cases.some(c => c.tags && c.tags.length);
+    v.innerHTML = `<div class="cases${tagged ? " tagged" : ""}">${DECK.cases.map(c => `<button type="button" class="case-card${a && c.n < a ? " done" : ""}${c.n === a ? " next" : ""}" style="--k:var(--c-${c.key})" data-go="${c.go}">
+        <div class="vign">${VIGN[c.key]()}</div><span class="n">Case ${c.n}</span>${tagged ? `<span class="tags">${(c.tags || []).map(x => `<i>${esc(x)}</i>`).join("")}</span>` : ""}<span class="org ${c.hint}">${esc(c.org)}</span><span class="nm">${esc(c.name)}</span><span class="cq">“${esc(c.q)}”</span></button>`).join("")}</div>
+      ${D.text.also && D.text.also.length ? `<p class="also">Also ${D.text.also.map(([g, t]) => `<button type="button" data-go="${g}">${esc(t)}</button>`).join("")}</p>` : ""}`;
+  },
+  anim(v, tl, D) { tl.from(v.querySelectorAll(".case-card"), { y: 20, opacity: 0, stagger: 0.07, duration: 0.5, ease: "expo.out", clearProps: "transform,opacity" }); },
+});
+// Then and today: the case's practice then, and what the presenter would explore today (a key press)
+Scene.def('thennow', {
+  build(v, sec, D) {
+    const T = D.text, d = { i: T.step, then: T.then, now: T.now };
+    v.innerHTML = `${T.steps && T.steps.length ? `<div class="steps">${T.steps.map((t, j) => `<span class="${j === d.i ? "on" : ""}">${t}</span>`).join("")}</div>` : ""}<div class="tn"><div class="side then"><span class="k">${esc(T.then_label)}</span>${d.then.map(t => `<div class="chip">${esc(t)}</div>`).join("")}</div>
+      <div class="side today fragment"><span class="k">${esc(T.now_label)}</span>${d.now.map(([k, t]) => `<div class="chip ${k}">${esc(t)}</div>`).join("")}</div></div>`;
+  },
+  anim(v, tl, D) { tl.from(v.querySelectorAll(".then .chip"), { x: -14, opacity: 0, stagger: 0.07, duration: 0.35 }); },
+});
+// Closing: three columns, an optional strip, and the presenter's cameo (still or video)
+Scene.def('closing', {
+  build(v, sec, D) {
+    const d = D.text;
+    v.innerHTML = `<div class="cols">${d.cols.map(([k, p]) => `<div class="col"><span class="k">${k}</span><p>${esc(p).replace(/\n/g, "<br>")}</p></div>`).join("")}</div>${d.strip ? `<p class="strip">${d.strip}</p>` : ""}${d.video && VID.enter ? `<div class="cameo-vid">${["enter", "breathe", "gesture"].map(k => `<video class="v-${k}" src="${VID[k]}" muted playsinline preload="auto"></video>`).join("")}</div>${d.cameo ? `<img class="cameo print-only" src="${ART[d.cameo]}" alt="">` : ""}` : `<img class="cameo" src="${ART[d.cameo]}" alt="">`}`;
+  },
+  anim(v, tl, D) { tl.from(v.querySelectorAll(".col"), { y: 18, opacity: 0, stagger: 0.14, duration: 0.5, ease: "expo.out" }).from(v.querySelectorAll("img.cameo"), { x: 40, opacity: 0, duration: 0.6, ease: "expo.out" }, 0.2); },
+});
+// Thank you: the deck's cases again, small, with their vignettes still moving
+Scene.def('thanks', {
+  build(v, sec, D) {
+    const R = DECK.cases.map(c => [c.key, c.recap]);
+    v.innerHTML = `<div class="recap">${R.map(([k, t]) => `<div class="rc" style="--k:var(--c-${k})"><div class="vign">${VIGN[k]()}</div><span class="mk"><img src="${ART["wm-" + k] || ART["logo-" + k]}" alt="${k}"></span><span class="nm">${esc(t)}</span></div>`).join("")}</div>${D.text.contact ? `<p class="contact">${D.text.contact}</p>` : ""}`;
+  },
+  anim(v, tl, D) { tl.from(v.querySelectorAll(".rc"), { y: 18, opacity: 0, stagger: 0.14, duration: 0.6, ease: "expo.out", clearProps: "transform,opacity" }); },
+});
+// Context: a case's vignette beside where, when, team and role, then the problem it set out to solve
+Scene.def('context', {
+  build(v, sec, D) {
+    const d = D.text;
+    v.innerHTML = `<div class="ctx"><div class="vign" style="--k:var(--c-${d.vignette.split("-")[0]})">${VIGN[d.vignette]()}</div><div class="facts">${d.rows.map(r => `<div class="frow"${r[4] ? ` style="--case:var(--c-${r[4]});--case-ink:var(--c-${r[4]}-ink)"` : ""}>${[["Where", r[0]], ["When", r[1]], ["Team", r[2]], ["My role", r[3]]].map(([k, t]) => `<div class="fc"><span class="k">${k}</span><p>${esc(t)}</p></div>`).join("")}</div>`).join("")}<div class="prob"><span class="k">The problem</span><p>${esc(d.problem)}</p></div></div></div>`;
+  },
+  anim(v, tl, D) { tl.from(v.querySelectorAll(".frow, .prob"), { opacity: 0, y: 14, stagger: 0.12, duration: 0.45, ease: "expo.out" }); },
+});
+
+/*CASES_JS*/
+for (const c of DECK.cases) if (c.vignette && c.vignette !== c.key) VIGN[c.key] = VIGN[c.vignette];
+/*SCENES_JS*/
+/* Build every scene, then fill footers: progress trail within a case, and stop labels. */
+const sections = [...document.querySelectorAll("section[data-scene]")];
+sections.forEach(sec => { const v = sec.querySelector(".viz"), s = sceneDef(sec); if (v && s.build) s.build(v, sec, sceneData(sec)); });
+document.querySelectorAll(".eyebrow .mk").forEach(m => { m.innerHTML = `<img src="${ART["logo-" + m.dataset.logo]}" alt="">`; });
+// a group (an appendix) numbers after the cases
+const caseNo = Object.fromEntries(DECK.cases.map(c => [c.key, c.n]).concat(DECK.groups.map((g, i) => [g, DECK.cases.length + i + 1])));
+sections.forEach((sec, i) => {
+  const k = sec.dataset.group || sec.dataset.case, foot = sec.querySelector(".foot"), band = sec.querySelector(".band");
+  foot.insertBefore(band.querySelector(".case"), foot.querySelector(".trail")).classList.add("cl");
+  foot.insertBefore(band.querySelector(".q"), foot.querySelector(".trail"));
+  band.remove();
+  const sh = foot.querySelector(".sheet");
+  if (k) {
+    const group = sections.filter(s => (s.dataset.group || s.dataset.case) === k), idx = group.indexOf(sec);
+    foot.querySelector(".trail").innerHTML = group.map((_, j) => `<i class="${j === idx ? "on" : j < idx ? "done" : ""}"></i>`).join("");
+    sh.dataset.a = `A-${caseNo[k]}${String(idx + 1).padStart(2, "0")}`;
+    sh.dataset.n = `${idx + 1} / ${group.length}`;
+    sh.dataset.t = `Stop ${idx + 1} of ${group.length}`;
+  } else {
+    sh.dataset.a = `A-${String(i).padStart(3, "0")}`; sh.dataset.n = ""; sh.dataset.t = "";
+  }
+});
+
+const splits = new Map(); let current = null;
+// Play-once vignettes (finite CSS animations, and any <video> movie) start from the top each time their slide plays, so
+// they never finish off screen; movies elsewhere stop. Reduced motion and print hide a movie and show the still beneath it.
+// A movie's side bands take the colour of its background near the corner, as this browser decodes it, so they never show as a tint
+document.addEventListener("loadeddata", e => { const v = e.target; if (!v.matches || !v.matches(".vign .movie video")) return;
+  try { const c = document.createElement("canvas"); c.width = 64; c.height = 36; c.getContext("2d").drawImage(v, 0, 0, 64, 36);
+    const [r, g, b] = c.getContext("2d").getImageData(2, 2, 1, 1).data; /* a little in from the corner, where encoders darken the edge */ v.parentElement.style.setProperty("--mbg", `rgb(${r},${g},${b})`); } catch (err) {} }, true);
+
+function vignPlay(sec) {
+  document.querySelectorAll(".vign video").forEach(v => { if (!sec || !sec.contains(v)) { clearTimeout(v._hold); v.pause(); } });
+  if (!sec || reduce || document.documentElement.classList.contains("print-pdf")) return;
+  sec.querySelectorAll(".vign .a").forEach(el => el.getAnimations().forEach(an => { if (an.effect.getTiming().iterations !== Infinity) { an.currentTime = 0; an.play(); } }));
+  sec.querySelectorAll(".vign video").forEach(v => { // the movie's overlay follows the movie's clock, so they can't drift apart
+    const ov = [...v.closest(".vign").querySelectorAll(".a")].flatMap(el => el.getAnimations());
+    ov.forEach(an => { an.pause(); an.currentTime = 0; }); // held on the first frame (data-hold seconds) before the movie starts
+    v.ontimeupdate = () => ov.forEach(an => { if (Math.abs(an.currentTime - v.currentTime * 1000) > 120) an.currentTime = v.currentTime * 1000; });
+    v.onplaying = () => ov.forEach(an => { an.currentTime = v.currentTime * 1000; an.play(); });
+    v.onended = () => ov.forEach(an => an.finish());
+    clearTimeout(v._hold); v.pause(); v.currentTime = 0;
+    v._hold = setTimeout(() => v.play()?.catch?.(() => {}), (+v.dataset.hold || 0) * 1000);
+  });
+}
+
+function play(sec) {
+  vignPlay(sec);
+  if (sec) sceneDef(sec).enter?.(sec, sceneData(sec)); // every time, even with reduced motion
+  if (!sec || !window.gsap || reduce) return;
+  if (current) current.progress(1).kill();
+  const v = sec.querySelector(".viz"); sceneDef(sec).state?.(sec, sceneData(sec));
+  const tl = gsap.timeline(); current = tl;
+  const h = sec.querySelector("h2.claim");
+  if (h) { if (splits.has(h)) splits.get(h).revert(); const sp = SplitText.create(h, { type: "lines", mask: "lines" }); splits.set(h, sp); tl.from(sp.lines, { yPercent: 100, duration: 0.7, stagger: 0.08, ease: "expo.out" }); }
+  const a = sceneDef(sec).anim; if (a && v) { const sub = gsap.timeline(); a(v, sub, sceneData(sec)); tl.add(sub, 0.25); }
+}
+
+function cameoVideo(sec) {
+  document.querySelectorAll(".cameo-vid video").forEach(v => { v.pause(); v.currentTime = 0; v.onended = null; });
+  const box = sec && sec.querySelector(".cameo-vid"); if (!box) return;
+  const [a, b, g] = box.querySelectorAll("video"), show = v => box.querySelectorAll("video").forEach(x => x.style.opacity = x === v ? 1 : 0);
+  show(a);
+  if (reduce) return show(b); // still frame of the resting pose
+  // mostly still: two breathing clips, then one gesture (point, fold arms, nod), repeat
+  const order = [b, b, g]; let i = 0;
+  const next = () => { const v = order[i++ % order.length]; v.currentTime = 0; show(v); v.onended = next; v.play().catch(() => {}); };
+  a.onended = next; a.play().catch(() => {});
+}
+
+/* ---------- notes ---------- */
+const notesEl = document.getElementById("notes"), notesInner = notesEl.querySelector(".inner");
+const noteHTML = items => items.map(n => n.t === "q" ? `<div class="q">${esc(n.x)}</div>` : n.t === "d" || n.t === "c" ? `<p class="d">${esc(n.x)}</p>` : `<p>${esc(n.x)}</p>`).join("");
+// NOTES[scene] is a list of steps, one per key press: [{label, items}]. f is reveal's fragment index (-1 before the first).
+const stepAt = (steps, f) => Math.max(0, Math.min((f ?? -1) + 1, steps.length - 1));
+// The next key-press label on this slide, or "" when the next key moves to the next slide
+function nextKey(id, f) { const steps = NOTES[id] || [], s = stepAt(steps, f); return s < steps.length - 1 ? steps[s + 1].label : ""; }
+function stepHTML(id, f, keyLine = true) {
+  const steps = NOTES[id] || []; if (!steps.length) return `<p class="d">No notes for this slide.</p>`;
+  const s = stepAt(steps, f), st = steps[s];
+  const head = steps.length > 1 ? `<div class="step">Key press ${s + 1} of ${steps.length} · ${esc(st.label)}</div>` : "";
+  return head + noteHTML(st.items) + (keyLine ? `<p class="k">Next key: <b>${esc(nextKey(id, f) || "next slide")}</b></p>` : "");
+}
+function showNotes(sec) { notesInner.innerHTML = `<div class="head">Speaker notes · ${esc(sec?.dataset.q || "")}</div>` + stepHTML(sec?.dataset.scene, Reveal.getIndices().f); }
+function toggleDrawer() { notesEl.hidden = !notesEl.hidden; }
+const toastEl = document.getElementById("toast"); let toastT;
+function toast(msg, ms = 9000) { toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => toastEl.hidden = true, ms); }
+
+/* Notes screen: a second window of this same deck link. The two windows talk over a BroadcastChannel,
+   with localStorage events as a fallback. Nothing here opens windows or leaves full screen. */
+const chan = "BroadcastChannel" in window ? new BroadcastChannel("/*CHANNEL*/") : null;
+const seen = new Set(); let onMsg = () => {};
+function send(m) { m.id = Math.random().toString(36).slice(2); m.ts = Date.now(); if (chan) chan.postMessage(m); try { localStorage.setItem("deck-msg", JSON.stringify(m)); } catch (e) {} }
+function receive(m) { if (!m || !m.id || seen.has(m.id)) return; seen.add(m.id); onMsg(m); }
+if (chan) chan.onmessage = e => receive(e.data);
+window.addEventListener("storage", e => { if (e.key === "deck-msg" && e.newValue) { try { receive(JSON.parse(e.newValue)); } catch (x) {} } });
+
+let role = "deck"; try { role = sessionStorage.getItem("deck-role") || "deck"; } catch (e) {}
+function becomeNotes() { try { sessionStorage.setItem("deck-role", "notes"); } catch (e) {} location.reload(); }
+document.getElementById("btn-role").addEventListener("click", becomeNotes);
+let linkedAt = 0;
+function notesHelp() {
+  if (Date.now() - linkedAt >= 6000) toast("To put notes on your other display: open this same deck link in a second browser window on that display, then press P there. Shift+N shows notes on this screen instead.", 12000);
+}
+document.getElementById("btn-notes").addEventListener("click", notesHelp);
+function deckState() { const st = Reveal.getState(); return { t: "state", i: st.indexh, f: st.indexf ?? -1 }; }
+function postState() { if (role === "deck") send(deckState()); }
+
+function startPresenter() {
+  document.documentElement.classList.add("role-notes");
+  const P = document.getElementById("presenter"), col = P.querySelector(".notes-col"), pos = P.querySelector(".pos"), rowKey = P.querySelector(".row-key"), key = P.querySelector(".key-next"), next = P.querySelector(".claim-next"), status = P.querySelector(".status"), timer = P.querySelector(".timer");
+  const meta = sections.map(sec => ({ id: sec.dataset.scene, claim: (h => (h.querySelectorAll("br").forEach(b => b.replaceWith(" ")), h.textContent))(sec.querySelector("h2.claim").cloneNode(true)), label: sec.querySelector(".foot .cl")?.textContent || "", q: sec.dataset.q }));
+  let t0 = null, last = 0;
+  setInterval(() => { if (Date.now() - last > 5000) { status.textContent = "Waiting for the deck window… (open the deck link in another window)"; status.classList.add("off"); } if (t0) { const s = Math.floor((Date.now() - t0) / 1000); timer.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; } }, 1000);
+  function render(i, f) {
+    const m = meta[i]; if (!m) return;
+    pos.textContent = `${i + 1} / ${meta.length} · ${m.label}`;
+    const k = nextKey(m.id, f);
+    rowKey.hidden = !k; key.textContent = k;
+    next.textContent = meta[i + 1] ? meta[i + 1].claim : "End of deck";
+    tele.show(m.id, f);
+  }
+  const tele = teleprompter(col, P.querySelector(".mic"), P.querySelector(".mic-note"), P.querySelector(".learn"));
+  render(0);
+  onMsg = d => { if (d.t !== "state") return; last = Date.now(); status.textContent = ""; status.classList.remove("off"); if (d.i > 0 && !t0) t0 = Date.now(); render(d.i, d.f); };
+  send({ t: "hello" }); setInterval(() => send({ t: "hello" }), 2000);
+  const nav = d => send({ t: "nav", d });
+  document.addEventListener("keydown", e => {
+    if (["ArrowRight", "ArrowDown", "PageDown", " "].includes(e.key)) { e.preventDefault(); nav("next"); }
+    if (["ArrowLeft", "ArrowUp", "PageUp"].includes(e.key)) { e.preventDefault(); nav("prev"); }
+    if (e.key === "m" || e.key === "M") tele.toggle();
+    if (e.key === "Escape") { try { sessionStorage.removeItem("deck-role"); } catch (x) {} location.reload(); }
+  });
+}
+
+/* Teleprompter: listens through the platform's dictation, finds your place in the current key press's notes
+   (Tele.align, forward only, skips allowed), dims what's been said and glides your place up the screen.
+   Learning: each key press you speak through leaves a private record (how much of each paragraph you said, the
+   phrases you ad-libbed, what you said), under data/users/<you>/prompter/visits. Paragraphs you skipped in two of
+   your last three runs fold down; Claude reads the records to propose rewrites of the notes themselves. */
+function teleprompter(col, btn, note, learnBtn) {
+  let words = [], spans = [], paras = [], els = [], blocks = [], cursor = 0, key = "", last = [], finals = [], partial = [], base = 0, d = null;
+  let hits = new Set(), visit = null, segs = [], partialRaw = "", moved = false, phraseFrom = -1, saveT;
+  const scroller = document.scrollingElement;
+  const RUN = Date.now().toString(36); let seq = 0;
+  const store = { rows: [], save: null }; // rows: past visits, newest first
+  let learn = true; try { learn = localStorage.getItem("prompter-learn") !== "off"; } catch (e) {}
+  const pkey = (id, x) => id + ":" + Tele.words(x).slice(0, 8).join(" ");
+  const usuallySkipped = k => {
+    const h = store.rows.flatMap(r => (r.paras || []).filter(p => p.key === k).map(p => p.said)).slice(0, 3);
+    return h.length >= 3 && h.filter(r => r < 0.15).length >= 2;
+  };
+  function show(id, f) {
+    const steps = NOTES[id] || [], s = steps.length ? stepAt(steps, f) : 0, k = id + ":" + s;
+    if (k === key) return; save(); key = k; last = [id, f];
+    words = []; spans = []; paras = []; let n = 0;
+    const em = EMPH[id] || [];
+    const prose = x => {
+      const marks = new Uint8Array(x.length);
+      for (const ph of em) for (let i = x.indexOf(ph); i >= 0; i = x.indexOf(ph, i + 1)) marks.fill(1, i, i + ph.length);
+      let out = "", pos = 0;
+      for (const m of x.matchAll(/\S+/g)) {
+        for (const w of Tele.words(m[0])) { words.push(w); spans.push(n); }
+        out += esc(x.slice(pos, m.index)) + `<span class="w${marks[m.index] ? " em" : ""}">${esc(m[0])}</span>`; n++; pos = m.index + m[0].length;
+      }
+      return out + esc(x.slice(pos));
+    };
+    const para = x => {
+      const pk = pkey(id, x), from = words.length, html = prose(x); paras.push({ key: pk, from, to: words.length });
+      return usuallySkipped(pk) ? `<p class="fold"><span class="fold-l">Usually skipped</span>${html}</p>` : `<p>${html}</p>`;
+    };
+    if (!steps.length) col.innerHTML = `<p class="d">No notes for this slide.</p>`;
+    else {
+      const st = steps[s];
+      const head = steps.length > 1 ? `<div class="step">Key press ${s + 1} of ${steps.length} · ${esc(st.label)}</div>` : "";
+      // questions and cues carry the span count before them, so they dim once you've spoken past them
+      col.innerHTML = head + st.items.map(it => it.t === "q" ? `<div class="q" data-at="${n}">${esc(it.x)}</div>` : it.t === "c" ? `<p class="c" data-at="${n}">${esc(it.x)}</p>` : para(it.x)).join("");
+    }
+    els = [...col.querySelectorAll(".w")]; blocks = [...col.querySelectorAll("[data-at]")];
+    cursor = 0; base = finals.length; hits = new Set(); target = 0; scroller.scrollTop = 0; takeBack();
+    visit = { id: RUN + "-" + ++seq, run: RUN, scene: id, step: s, label: steps[s]?.label || "", at: Date.now(), heard: [], adlib: [], paras, hits };
+    if (segs.length && partialRaw) segs.push({ v: visit, at: partialRaw.split(/\s+/).length }); // mid-phrase: the rest of it is this key press's
+    moved = false;
+  }
+  function heard() {
+    const spoken = finals.slice(base).concat(partial), was = cursor;
+    let r = Tele.align(words, cursor, spoken);
+    if (r.cursor <= cursor) {
+      // nothing ahead matched: maybe you went back to an earlier part you haven't said yet
+      r = Tele.relocate(words, cursor, spoken, i => said(hits, i) === 1);
+      if (!r) return;
+      phraseFrom = r.hits[0] ?? r.cursor - 1; // re-walk the settled phrase from the new place
+    } else if (!moved) phraseFrom = cursor;
+    r.hits.forEach(h => hits.add(h)); moved = true; cursor = r.cursor;
+    paint(cursor < was || cursor - was > 12);
+  }
+  // Grey means before your place, or already said anywhere: go back and the parts you jumped over light up
+  // again, while anything you said further down stays grey.
+  function paint(jumped) {
+    const dim = new Uint8Array(els.length);
+    for (let k = 0; k < words.length; k++) dim[spans[k]] = k < cursor || said(hits, k) ? 1 : 0;
+    els.forEach((el, i) => el.classList.toggle("said", dim[i] === 1));
+    for (const b of blocks) { const n = +b.dataset.at; b.classList.toggle("said-block", n > 0 && dim[n - 1] === 1); }
+    const el = els[spans[cursor]] || els[spans[cursor - 1]]; if (!el) return;
+    const { top, bottom, height } = el.getBoundingClientRect();
+    // you scrolled, and your place is on screen (even partly): follow again once you've left the wheel alone, or right away on a jump
+    if (mine && bottom > 0 && top < innerHeight && (jumped || Date.now() - wheelAt > 1500)) takeBack();
+    // the line you're reading sits second from the top, so at most one spoken line stays above it
+    const lineH = parseFloat(getComputedStyle(el.parentElement).lineHeight) || height * 1.5, lineTop = top - (lineH - height) / 2;
+    target = Math.max(0, lineTop + scroller.scrollTop - lineH); // exactly one line above; older lines clear the top edge
+  }
+  // dictation settles a phrase a few seconds after you say it, often after you've moved on, and a phrase can run
+  // through several key presses. Each key press gets the words that came after it: segs marks where in the live
+  // guess each one started. shortcut: offsets are counted on the live guess, so a final that rewords it can shift
+  // a word or two across the cut; fine for learning, not exact.
+  function onPartial(text) { if (!segs.length && text) segs = [{ v: visit, at: 0 }]; partialRaw = (text || "").trim(); partial = Tele.words(text || ""); heard(); }
+  function onFinal(text) {
+    const t = (text || "").trim(), parts = segs.length ? segs : [{ v: visit, at: 0 }]; segs = []; partialRaw = ""; if (!t) return;
+    const pw = Tele.words(t); finals.push(...pw); partial = []; heard();
+    // live matching only keeps the newest words of each guess, so re-walk the settled phrase to record every word you said
+    if (moved) for (let c = phraseFrom, k = 2, at = finals.length - pw.length; k <= pw.length; k++) { const r = Tele.align(words, c, finals.slice(base, at + k)); r.hits.forEach(h => hits.add(h)); c = Math.max(c, r.cursor); }
+    const toks = t.split(/\s+/);
+    parts.forEach((p, i) => {
+      const part = toks.slice(p.at, parts[i + 1]?.at ?? toks.length).join(" "); if (!part || !p.v) return;
+      p.v.heard.push(part);
+      if (p.v === visit && !moved && Tele.words(part).length >= 3) p.v.adlib.push(part); // a phrase that moved nothing is an ad-lib
+      if (p.v !== visit) save(p.v);
+    });
+    moved = false; clearTimeout(saveT); saveT = setTimeout(save, 4000);
+  }
+  // write (or rewrite) this key press's record; only once you've said something on it
+  function save(v = visit) {
+    if (v === visit) clearTimeout(saveT);
+    if (!v || !v.heard.length || !learn) return;
+    const covered = i => said(v.hits, i);
+    const doc = { run: v.run, scene: v.scene, step: v.step, label: v.label, at: v.at,
+      paras: v.paras.map(p => { let h = 0; for (let i = p.from; i < p.to; i++) h += covered(i); return { key: p.key, n: p.to - p.from, said: Math.round(100 * h / Math.max(1, p.to - p.from)) / 100 }; }),
+      adlib: v.adlib.slice(0, 30), heard: v.heard.join(" ").slice(0, 6000) };
+    const i = store.rows.findIndex(r => r.id === v.id), row = { id: v.id, ...doc };
+    if (i >= 0) store.rows[i] = row; else store.rows.unshift(row);
+    store.save?.(v.id, doc); learnLabel();
+  }
+  // a word counts as said if it was matched, or sits in a gap of three words or fewer between matches
+  function said(hits, i) { if (hits.has(i)) return 1; let a = 0, b = 0; while (a < 4 && !hits.has(i - a)) a++; while (b < 4 && !hits.has(i + b)) b++; return a + b - 1 <= 3 && a < 4 && b < 4 ? 1 : 0; }
+  document.addEventListener("visibilitychange", () => { if (document.hidden) save(); });
+  function learnLabel() {
+    const runs = new Set(store.rows.map(r => r.run)).size;
+    learnBtn.textContent = learn ? `Learning from your runs · ${runs} so far · on` : "Learning off · click to turn on";
+  }
+  learnBtn.addEventListener("click", () => { learn = !learn; try { localStorage.setItem("prompter-learn", learn ? "on" : "off"); } catch (e) {} learnLabel(); });
+  learnLabel();
+  (async () => {
+    if (!window.claude?.use) return; // local preview: records stay in memory
+    const [db, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+    const uid = db && user ? await user.id() : null;
+    if (!uid) { learnBtn.hidden = true; return; }
+    const vis = db.doc("data/users/" + uid + "/prompter").collection("visits");
+    store.save = (id, doc) => vis.doc(id).set(doc).catch(e => console.warn("prompter: record not saved", e?.code));
+    const snap = await Promise.race([vis.orderBy("at", "desc").limit(400).get().catch(() => null), new Promise(r => setTimeout(() => r(null), 10000))]);
+    if (!snap) return;
+    const have = new Set(store.rows.map(r => r.id));
+    store.rows.push(...snap.docs.filter(x => !have.has(x.id)).map(x => ({ id: x.id, ...x.data() })));
+    store.rows.sort((a, b) => b.at - a.at); learnLabel();
+    if (last.length) { key = ""; show(...last); } // re-fold the slide on screen now that history is in
+  })();
+  // glide toward the current place; when you stop speaking the target stops, and so does the scroll.
+  // Scroll yourself and the prompter lets go. It follows again once your place is on screen and you've left
+  // the wheel alone for a moment, when your speech jumps to what's on screen, or at the next key press.
+  let target = 0, mine = false, wheelAt = 0;
+  (function glide() {
+    const y = scroller.scrollTop, dy = target - y;
+    if (!mine && Math.abs(dy) > 0.5) scroller.scrollTop = Math.abs(dy) < 2 ? target : y + dy * 0.1; // ease in, then land exactly
+    requestAnimationFrame(glide);
+  })();
+  let dragging = false;
+  const yours = () => { wheelAt = Date.now(); if (!mine) { mine = true; note.textContent = "Auto-scroll paused while you scroll. It follows again when your place is on screen."; } };
+  addEventListener("wheel", yours, { passive: true });
+  addEventListener("touchmove", yours, { passive: true });
+  addEventListener("pointerdown", e => { if (e.clientX >= document.documentElement.clientWidth) dragging = true; }); // on the scrollbar
+  addEventListener("pointerup", () => { dragging = false; });
+  addEventListener("scroll", () => { if (dragging) yours(); }, { passive: true });
+  const takeBack = () => { mine = false; if (note.textContent.startsWith("Auto-scroll paused")) note.textContent = ""; };
+  const setBtn = (state, msg) => { btn.dataset.state = state; btn.querySelector(".mic-l").textContent = state === "listening" ? "Prompter listening · M to stop" : state === "starting" ? "Starting…" : "Start prompter (M)"; note.textContent = msg || ""; };
+  (async () => {
+    d = window.claude?.use ? await claude.use("dictation") : null;
+    if (!d) { note.textContent = "Voice tracking isn't available in this window. It needs Chrome and the published deck."; return; }
+    btn.hidden = false;
+    d.onPartial(e => onPartial(e.text));
+    d.onFinal(e => onFinal(e.text));
+    d.onState(e => { if (e.state === "idle") save(); setBtn(e.state, e.state === "idle" && e.reason && !["stopped", "viewer_stopped"].includes(e.reason)
+      ? ({ hidden: "Paused while this window was hidden. Press M to resume.", not_granted: "Microphone is off for this deck. Turn it on in the artifact's Permissions menu.", rate_limited: "Dictation is busy. Try again in a moment.", unavailable: "Dictation isn't available for this account.", time_limit: "Stopped after 60 minutes. Press M to restart." })[e.reason] || "Dictation stopped. Press M to restart." : ""); });
+  })();
+  function toggle() {
+    if (!d) return;
+    if (d.active()) d.stop().catch(() => {});
+    else d.start().catch(e => { if (e?.code === "not_granted") note.textContent = "Microphone is off for this deck. Turn it on in the artifact's Permissions menu."; });
+  }
+  btn.addEventListener("click", toggle);
+  // for testing without a microphone: __tele.say("words", true) feeds a settled phrase, false a live guess
+  window.__tele = { say(t, final) { if (final) onFinal(t); else onPartial(t); }, get cursor() { return cursor; }, get rows() { return store.rows; } };
+  return { show, toggle };
+}
+
+function goTo(id) { const i = Reveal.getSlides().findIndex(s => s.dataset.scene === id); if (i >= 0) { navJump = true; Reveal.slide(i); } }
+/* Chapter transitions (deck.py CHAPTERS = True): stepping forward from a case's last slide into the next case's opener, the
+   finished slide fades out and its logo holds a beat in the centre, then shrinks left and fades well before the edge while the
+   next case's logo bumps in and fades up; then the logo fades out and the opener fades in.
+   Forward steps only; card and menu jumps, going back, scroll view, print and reduced motion keep the normal fade. */
+let navJump = false, chapTl = null;
+const CHAP = DECK.chapters || {};
+const chapEl = document.body.appendChild(Object.assign(document.createElement("div"), { id: "chap", innerHTML: "<img class=\"c-out\" alt=\"\"><img class=\"c-in\" alt=\"\">" }));
+function chapter(e) {
+  const jump = navJump; navJump = false;
+  if (chapTl) chapTl.progress(1);
+  const to = e.currentSlide, from = e.previousSlide, pair = to && CHAP[to.dataset.scene];
+  if (!pair || jump || !from || reduce || scrollView || !window.gsap || document.documentElement.classList.contains("print-pdf")) return false;
+  if (Reveal.getSlides().indexOf(from) !== e.indexh - 1) return false;
+  const [a, b] = pair, vw = innerWidth, oi = chapEl.querySelector(".c-out"), ii = chapEl.querySelector(".c-in");
+  oi.src = a ? ART["logo-" + a] : ""; ii.src = b ? ART["logo-" + b] : ""; oi.style.display = a ? "" : "none"; ii.style.display = b ? "" : "none"; oi.dataset.k = a || ""; ii.dataset.k = b || ""; /* a case's CSS can size its own mark: #chap img[data-k=...] */
+  chapEl.style.display = "block";
+  gsap.set(from, { visibility: "visible", opacity: 1, transition: "none", zIndex: 3 });
+  gsap.set(to, { visibility: "visible", opacity: 0, transition: "none" });
+  gsap.set([oi, ii], { xPercent: -50, yPercent: -50, x: 0, scale: 1, opacity: 0 });
+  // hide the old slide before its props clear, so reveal's fade never replays it in place
+  const done = () => { gsap.set(from, { opacity: 0 }); gsap.set([from, to], { clearProps: "visibility,zIndex" }); gsap.set(to, { opacity: 1 }); chapEl.style.display = "none"; chapTl = null;
+    requestAnimationFrame(() => gsap.set([from, to], { clearProps: "opacity,transition" })); };
+  chapTl = gsap.timeline({ onComplete: done, onInterrupt: done });
+  chapTl.to(from, { opacity: 0, duration: 0.25, ease: "power1.out" }, 0);
+  let t = 0.12; // a quick beat: the outgoing logo shows, then shrinks left and is gone well before the edge (logos on screen ~0.9s)
+  if (a) { chapTl.fromTo(oi, { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.16, ease: "power2.out" }, t);
+    chapTl.to(oi, { x: -vw * 0.12, scale: 0.55, duration: 0.3, ease: "power2.out" }, t + 0.24);
+    chapTl.to(oi, { opacity: 0, duration: 0.24, ease: "power1.in" }, t + 0.24); t += 0.27; }
+  if (b) { chapTl.fromTo(ii, { x: vw * 0.1, scale: 0.8, opacity: 0 }, { x: 0, scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.6)" }, t); t += 0.45; }
+  else t += 0.15;
+  if (b) chapTl.to(ii, { opacity: 0, scale: 1.04, duration: 0.2, ease: "power1.in" }, t);
+  chapTl.call(() => play(to), null, t); // the opener's entrance sets its first frame before it fades in, never after
+  chapTl.to(to, { opacity: 1, duration: 0.3, ease: "power1.out" }, t + 0.05);
+  return true;
+}
+document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) { e.preventDefault(); goTo(b.dataset.go); } });
+document.getElementById("btn-cases").addEventListener("click", () => goTo("cases"));
+
+const scrollView = location.hash === "#scroll"; const btnView = document.getElementById("btn-view");
+btnView.setAttribute("aria-pressed", String(scrollView)); btnView.textContent = scrollView ? "Slide view" : "Scroll view";
+// reveal.js reads its view mode only at start, so switching reloads the page on the #scroll address
+function toggleView() { location.hash = scrollView ? "slides" : "scroll"; location.reload(); }
+btnView.addEventListener("click", toggleView);
+document.getElementById("btn-full").addEventListener("click", () => { const d = document.documentElement; (document.fullscreenElement ? document.exitFullscreen() : d.requestFullscreen?.())?.catch?.(() => {}); });
+
+const tools = document.querySelector(".tools"); let lastIdx = 0;
+function updateTools(i) { tools.classList.toggle("hide", !(i === 0 || i < lastIdx)); lastIdx = i; }
+
+if (role === "notes") {
+  startPresenter();
+} else {
+  document.addEventListener("keydown", e => {
+    if (e.target.closest("input,textarea,select")) return;
+    const k = e.key.toLowerCase();
+    if (k === "n") { e.shiftKey ? toggleDrawer() : notesHelp(); }
+    if (k === "p") becomeNotes();
+    if (k === "s") toggleView();
+    if (k === "c") goTo("cases");
+    if (k === "g") document.documentElement.classList.toggle("show-grid");
+  });
+  Reveal.initialize({ view: scrollView ? "scroll" : null, hash: false, width: 1600, height: 900, margin: 0.04, center: false, controls: true, progress: true, slideNumber: false, transition: "fade", backgroundTransition: "none", pdfSeparateFragments: false, scrollActivationWidth: 0, keyboard: { 67: null, 71: null, 78: null, 83: null, 80: null } }).then(() => {
+    // the first headline is split into lines after the web fonts load, or a slow font load leaves it wrapped wrong
+    showNotes(Reveal.getCurrentSlide()); (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => play(Reveal.getCurrentSlide())); cameoVideo(Reveal.getCurrentSlide()); updateTools(Reveal.getState().indexh); postState();
+    Reveal.on("slidechanged", e => { showNotes(e.currentSlide); if (!chapter(e)) play(e.currentSlide); cameoVideo(e.currentSlide); updateTools(e.indexh); postState(); });
+    const onFrag = on => e => { postState(); showNotes(Reveal.getCurrentSlide()); const sec = Reveal.getCurrentSlide(); sceneDef(sec).frag?.(sec, on, e, sceneData(sec)); };
+    Reveal.on("fragmentshown", onFrag(true)); Reveal.on("fragmenthidden", onFrag(false));
+    onMsg = d => { if (d.t === "hello") { linkedAt = Date.now(); postState(); } if (d.t === "nav") { d.d === "next" ? Reveal.next() : d.d === "prev" ? Reveal.prev() : (navJump = true, Reveal.slide(+d.d)); } };
+  });
+}
+</script>
